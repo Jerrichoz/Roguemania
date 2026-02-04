@@ -16,9 +16,9 @@ namespace MaxGaming.FinalCharacterController
         public bool IsRotatingToTarget { get; private set; } = false;
 
         [Header("Base Movement")]
-        public float walkAcceleration = 25f;
+        public float walkAcceleration = 26f;
         public float walkSpeed = 2f;
-        public float runAcceleration = 35f;
+        public float runAcceleration = 36f;
         public float runSpeed = 4f;
         public float sprintAcceleration = 50f;
         public float sprintSpeed = 7f;
