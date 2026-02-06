@@ -9,7 +9,7 @@ namespace MaxGaming.FinalCharacterController
     {
         #region Variables
         [SerializeField] private bool holdToSrpint = true;
-        public PlayerControls PlayerControls { get; private set; }
+
         public Vector2 MovementInput { get; private set; }
         public Vector2 LookInput { get; private set; }
         public bool JumpPressed { get; private set; }
@@ -22,15 +22,23 @@ namespace MaxGaming.FinalCharacterController
         #region Startup
         private void OnEnable()
         {
-            PlayerControls = new PlayerControls();
-            PlayerControls.Enable();
-            PlayerControls.PlayerLocomotionMap.Enable();
-            PlayerControls.PlayerLocomotionMap.SetCallbacks(this);
+            if (PlayerInputManager.Instance?.PlayerControls == null)
+            {
+                Debug.LogError("PlayerControls is not init - can not enable");
+                return;
+            }
+            PlayerInputManager.Instance.PlayerControls.PlayerLocomotionMap.Enable();
+            PlayerInputManager.Instance.PlayerControls.PlayerLocomotionMap.SetCallbacks(this);
         }
         private void OnDisable()
         {
-            PlayerControls.PlayerLocomotionMap.Disable();
-            PlayerControls.PlayerLocomotionMap.RemoveCallbacks(this);
+            if (PlayerInputManager.Instance?.PlayerControls == null)
+            {
+                Debug.LogError("PlayerControls is not init - can not disable");
+                return;
+            }
+            PlayerInputManager.Instance.PlayerControls.PlayerLocomotionMap.Disable();
+            PlayerInputManager.Instance.PlayerControls.PlayerLocomotionMap.RemoveCallbacks(this);
 
         }
         #endregion
@@ -66,7 +74,8 @@ namespace MaxGaming.FinalCharacterController
 
         public void OnJump(InputAction.CallbackContext context)
         {
-
+            if (context.performed)
+                JumpPressed = true;
         }
 
         public void OnToggleWalk(InputAction.CallbackContext context)
