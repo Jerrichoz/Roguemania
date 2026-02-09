@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MaxGaming.FinalCharacterController
@@ -12,7 +13,9 @@ namespace MaxGaming.FinalCharacterController
         private PlayerLocomotionInput _playerLocomotionInput;
         private PlayerState _playerState;
         private PlayerController _playerController;
+        private PlayerActionsInput _playerActionsInput;
 
+        //Locomotion
         private static int inputXHash = Animator.StringToHash("inputX");
         private static int inputYHash = Animator.StringToHash("inputY");
         private static int inputMagnitudeHash = Animator.StringToHash("inputMagnitude");
@@ -20,9 +23,18 @@ namespace MaxGaming.FinalCharacterController
         private static int isGroundedHash = Animator.StringToHash("isGrounded");
         private static int isFallingHash = Animator.StringToHash("isFalling");
         private static int isJumpingHash = Animator.StringToHash("isJumping");
+
+
+        //Actions
+        private static int isAttackingHash = Animator.StringToHash("isAttacking");
+        private static int isInteractingHash = Animator.StringToHash("isInteracting");
+        private static int isPlayingActionsHash = Animator.StringToHash("isPlayingAction");
+        private bool _isPlayingAction;
+        private int[] actionHashes;
+
+        // Camera/Rotation
         private static int isRotatingToTargetHash = Animator.StringToHash("isRotatingToTarget");
         private static int rotationMismatchHash = Animator.StringToHash("rotationMismatch");
-
         private Vector3 _currentBlendInput = Vector3.zero;
 
         private void Awake()
@@ -30,6 +42,9 @@ namespace MaxGaming.FinalCharacterController
             _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
             _playerState = GetComponent<PlayerState>();
             _playerController = GetComponent<PlayerController>();
+            _playerActionsInput = GetComponent<PlayerActionsInput>();
+
+            actionHashes = new int[] { isInteractingHash, isAttackingHash };
         }
 
         private void Update()
@@ -45,6 +60,9 @@ namespace MaxGaming.FinalCharacterController
             bool isJumping = _playerState.CurrentPlayerMovementState == PlayerMovementState.Jumping;
             bool isFalling = _playerState.CurrentPlayerMovementState == PlayerMovementState.Falling;
             bool isGrounded = _playerState.InGroundedState();
+            // Input startet die Action (einmalig)
+            if (_playerActionsInput.AttackPressed || _playerActionsInput.InteractPressed)
+                _isPlayingAction = true;
 
             Vector2 inputTarget = isSprinting ? _playerLocomotionInput.MovementInput * 1.5f :
                                   isRunning ? _playerLocomotionInput.MovementInput * 1f : _playerLocomotionInput.MovementInput * 0.5f;
@@ -56,11 +74,19 @@ namespace MaxGaming.FinalCharacterController
             _animator.SetBool(isFallingHash, isFalling);
             _animator.SetBool(isJumpingHash, isJumping);
             _animator.SetBool(isRotatingToTargetHash, _playerController.IsRotatingToTarget);
+            _animator.SetBool(isAttackingHash, _playerActionsInput.AttackPressed);
+            _animator.SetBool(isInteractingHash, _playerActionsInput.InteractPressed);
+            _animator.SetBool(isPlayingActionsHash, _isPlayingAction);
 
             _animator.SetFloat(inputXHash, _currentBlendInput.x);
             _animator.SetFloat(inputYHash, _currentBlendInput.y);
             _animator.SetFloat(inputMagnitudeHash, _currentBlendInput.magnitude);
             _animator.SetFloat(rotationMismatchHash, _playerController.RotationMismatch);
+            AnimatorStateInfo state = _animator.GetCurrentAnimatorStateInfo(0);
+            if (_isPlayingAction && state.IsTag("Action") && state.normalizedTime >= 0.95f && !state.loop)
+            {
+                _isPlayingAction = false;
+            }
         }
     }
 }

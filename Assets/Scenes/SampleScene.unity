@@ -140,6 +140,18 @@ MonoBehaviour:
   _cameraZoomSpeed: 0.2
   _cameraMinZoom: 1
   _cameraMaxZoom: 10
+--- !u!114 &28936132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28936116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89a3d1915b2018d488b4e4377e0c42e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaxGaming.FinalCharacterController.PlayerActionsInput
 --- !u!1001 &190986240
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -663,13 +675,13 @@ MonoBehaviour:
   MinimumDistanceFromTarget: 0.3
   AvoidObstacles:
     Enabled: 1
-    DistanceLimit: 0
+    DistanceLimit: 0.01
     MinimumOcclusionTime: 0
     CameraRadius: 0.4
     UseFollowTarget:
-      Enabled: 0
-      YOffset: 0
-    Strategy: 0
+      Enabled: 1
+      YOffset: 0.05
+    Strategy: 2
     MaximumEffort: 4
     SmoothingTime: 0
     Damping: 0.4
@@ -1167,15 +1179,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2128991385240314816, guid: 14d5fcb9532377143bb21c68ad666910, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.100004
+      value: -7.1000013
       objectReference: {fileID: 0}
     - target: {fileID: 4798795629566807367, guid: 14d5fcb9532377143bb21c68ad666910, type: 3}
       propertyPath: CameraDistance
-      value: 5.600004
+      value: 8.600001
       objectReference: {fileID: 0}
     - target: {fileID: 4798795629566807367, guid: 14d5fcb9532377143bb21c68ad666910, type: 3}
       propertyPath: AvoidObstacles.Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798795629566807367, guid: 14d5fcb9532377143bb21c68ad666910, type: 3}
+      propertyPath: AvoidObstacles.IgnoreTag
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 5312252140646501555, guid: 14d5fcb9532377143bb21c68ad666910, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1187,7 +1203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5312252140646501555, guid: 14d5fcb9532377143bb21c68ad666910, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.100004
+      value: -7.1000013
       objectReference: {fileID: 0}
     - target: {fileID: 7607716611662585203, guid: 14d5fcb9532377143bb21c68ad666910, type: 3}
       propertyPath: AimDistance
@@ -1204,6 +1220,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 175033699269166743, guid: 14d5fcb9532377143bb21c68ad666910, type: 3}
       insertIndex: -1
       addedObject: {fileID: 28936124}
+    - targetCorrespondingSourceObject: {fileID: 175033699269166743, guid: 14d5fcb9532377143bb21c68ad666910, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 28936132}
     - targetCorrespondingSourceObject: {fileID: 7072698646501790737, guid: 14d5fcb9532377143bb21c68ad666910, type: 3}
       insertIndex: -1
       addedObject: {fileID: 824574432}
