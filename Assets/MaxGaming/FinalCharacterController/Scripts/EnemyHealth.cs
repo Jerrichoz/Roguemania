@@ -1,15 +1,31 @@
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+namespace MaxGaming.FinalCharacterController
 {
-    public float maxHealth = 20f;
-    private float _hp;
-
-    private void Awake() => _hp = maxHealth;
-
-    public void TakeDamage(float dmg)
+    public class EnemyHealth : MonoBehaviour
     {
-        _hp -= dmg;
-        if (_hp <= 0f) Destroy(gameObject);
+        [Header("Health")]
+        public float maxHealth = 20f;
+        public float currentHealth;
+
+        private void Awake()
+        {
+            currentHealth = maxHealth;
+        }
+
+        public void TakeDamage(float amount)
+        {
+            currentHealth -= amount;
+            Debug.Log($"{name} took {amount} damage. HP: {currentHealth}/{maxHealth}");
+
+            if (currentHealth <= 0f)
+                Die();
+        }
+
+        private void Die()
+        {
+            Debug.Log($"{name} died");
+            Destroy(gameObject);
+        }
     }
 }
