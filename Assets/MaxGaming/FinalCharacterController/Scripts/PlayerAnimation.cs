@@ -74,9 +74,14 @@ namespace MaxGaming.FinalCharacterController
             _animator.SetBool(isFallingHash, isFalling);
             _animator.SetBool(isJumpingHash, isJumping);
             _animator.SetBool(isRotatingToTargetHash, _playerController.IsRotatingToTarget);
-            _animator.SetBool(isAttackingHash, _playerActionsInput.AttackPressed);
-            _animator.SetBool(isInteractingHash, _playerActionsInput.InteractPressed);
-            _animator.SetBool(isPlayingActionsHash, _isPlayingAction);
+            //_animator.SetBool(isAttackingHash, _playerActionsInput.AttackPressed);
+            //_animator.SetBool(isInteractingHash, _playerActionsInput.InteractPressed);
+            if (_playerActionsInput.AttackPressed)
+                _animator.SetTrigger("attack");
+
+            if (_playerActionsInput.InteractPressed)
+                _animator.SetTrigger("interact");
+            //_animator.SetBool(isPlayingActionsHash, _isPlayingAction);
 
             _animator.SetFloat(inputXHash, _currentBlendInput.x);
             _animator.SetFloat(inputYHash, _currentBlendInput.y);

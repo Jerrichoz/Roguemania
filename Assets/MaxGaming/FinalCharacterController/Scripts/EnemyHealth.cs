@@ -16,7 +16,12 @@ namespace MaxGaming.FinalCharacterController
         public void TakeDamage(float amount)
         {
             currentHealth -= amount;
-            Debug.Log($"{name} took {amount} damage. HP: {currentHealth}/{maxHealth}");
+            Debug.Log("TakeDamage called");
+            Debug.Log($"HitFlash found? {GetComponentInChildren<HitFlash>() != null}");
+
+            var flash = GetComponentInChildren<HitFlash>();
+            if (flash != null) flash.Flash();
+
 
             if (currentHealth <= 0f)
                 Die();

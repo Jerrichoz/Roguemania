@@ -4,52 +4,39 @@ namespace MaxGaming.FinalCharacterController
     public class PlayerCombat : MonoBehaviour
     {
         [Header("Hit Detection")]
-        public Transform attackOrigin;        // Empty GameObject vor dem Player
-        public float attackRadius = 1.2f;
-        public LayerMask enemyLayers;
+        [SerializeField] private Transform attackOrigin;
+        [SerializeField] private float attackRadius = 1.2f;
+        [SerializeField] private LayerMask enemyLayers;
 
-        [Header("Combat")]
-        public float baseDamage = 10f;
-        public float attackCooldown = 0.4f;
+        [Header("Damage")]
+        [SerializeField] private float baseDamage = 10f;
 
-        private float _cooldownTimer;
-
-        private void Update()
+        // Wird per Animation Event aufgerufen (Hit-Frame)
+        public void DoAttackHit()
         {
-            if (_cooldownTimer > 0f)
-                _cooldownTimer -= Time.deltaTime;
-
-            // Quick test input (new input system)
-            if (Keyboard.current.leftMouseButton.wasPressedThisFrame)
+            if (attackOrigin == null)
             {
-                TryAttack();
+                Debug.LogWarning("PlayerCombat: attackOrigin not set.");
+                return;
             }
-        }
 
-        public void TryAttack()
-        {
-            if (_cooldownTimer > 0f) return;
-            _cooldownTimer = attackCooldown;
+            var hits = Physics.OverlapSphere(
+                attackOrigin.position,
+                attackRadius,
+                enemyLayers,
+                QueryTriggerInteraction.Ignore
+            );
 
-            // Detect enemies
-            Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRadius, enemyLayers, QueryTriggerInteraction.Ignore);
+            Debug.Log($"DoAttackHit: hits={hits.Length}");
 
-            Debug.Log($"Attack! hits={hits.Length}");
-
-            foreach (var hit in hits)
+            foreach (var c in hits)
             {
-                if (hit.TryGetComponent<EnemyHealth>(out var hp))
+                var hp = c.GetComponentInParent<EnemyHealth>();
+                if (hp != null)
                 {
-                    float damage = CalculateDamage();
-                    hp.TakeDamage(damage);
+                    hp.TakeDamage(baseDamage);
                 }
             }
-        }
-
-        private float CalculateDamage()
-        {
-            // MVP: nur BaseDamage, später Stats/Crit/Items
-            return baseDamage;
         }
 
         private void OnDrawGizmosSelected()
