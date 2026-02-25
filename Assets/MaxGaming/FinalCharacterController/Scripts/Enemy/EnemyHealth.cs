@@ -7,6 +7,7 @@ namespace MaxGaming.FinalCharacterController
     public class EnemyHealth : MonoBehaviour
     {
         public static event Action<EnemyHealth> OnAnyEnemyDied;
+        public event Action<float, float> OnHealthChanged;
         [Header("Health")]
         public float maxHealth = 20f;
         public float currentHealth;
@@ -24,41 +25,20 @@ namespace MaxGaming.FinalCharacterController
         private bool _dizzyUsed;
         private float _lastHitTime;
 
+
         private EnemyController _enemyController;
         private CharacterController _cc;
 
         private void Awake()
         {
-            Debug.Log($"EnemyHealth Animator = {(animator != null ? animator.name : "NULL")}", this);
-
             currentHealth = maxHealth;
             if (animator == null)
             {
                 animator = GetComponentInChildren<Animator>();
-                Debug.Log($"Animator auto-found: {(animator != null ? animator.name : "NULL")}", this);
             }
-
-            if (animator != null)
-            {
-                Debug.Log($"Animator={animator.name} Controller={animator.runtimeAnimatorController.name}", this);
-
-                bool has = false;
-                foreach (var p in animator.parameters)
-                {
-                    if (p.name == "getHit")
-                    {
-                        has = true;
-                        Debug.Log($"Found param getHit type={p.type}", this);
-                        break;
-                    }
-                }
-                Debug.Log($"Has getHit param? {has}", this);
-                animator.SetTrigger("getHit");
-                Debug.Log("Triggered getHit", this);
-            }
-
             _enemyController = GetComponent<EnemyController>();
             _cc = GetComponent<CharacterController>();
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
         }
 
         public void TakeDamage(float amount)
@@ -66,13 +46,12 @@ namespace MaxGaming.FinalCharacterController
             if (animator != null)
             {
                 animator.SetTrigger("getHit");
-                Debug.Log("Triggered getHit");
             }
 
             if (_isDead) return;
-            currentHealth -= amount;
-            currentHealth = Mathf.Max(currentHealth, 0f);
+            currentHealth = Mathf.Max(0f, currentHealth - amount);
 
+            // Hit Flash
             var flash = GetComponentInChildren<HitFlashSwap>();
             if (flash != null) flash.Flash();
             // GetHit trigger (mit cooldown)
@@ -90,9 +69,12 @@ namespace MaxGaming.FinalCharacterController
                 StartCoroutine(DizzyRoutine());
             }
 
-
+            // Damage Number
+            DamageNumberSpawner.Spawn(amount, transform.position + Vector3.up * 1.4f);
             if (currentHealth <= 0f)
                 Die();
+            else if (animator != null)
+                animator.SetTrigger("getHit");
         }
         private IEnumerator LogStateNextFrame()
         {
