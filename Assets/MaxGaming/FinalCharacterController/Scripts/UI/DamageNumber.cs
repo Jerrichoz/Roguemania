@@ -8,7 +8,11 @@ public class DamageNumber : MonoBehaviour
     [SerializeField] private float lifetime = 0.8f;
 
     private float _t;
-
+    private Camera cam;
+    private void Awake()
+    {
+        cam = Camera.main;
+    }
     public void SetValue(float amount)
     {
         if (text != null)
@@ -20,6 +24,11 @@ public class DamageNumber : MonoBehaviour
         _t += Time.deltaTime;
         transform.position += Vector3.up * floatUpSpeed * Time.deltaTime;
 
+        // Zur Kamera ausrichten
+        if (cam != null)
+        {
+            transform.forward = cam.transform.forward;
+        }
         if (_t >= lifetime)
             Destroy(gameObject);
     }

@@ -904,6 +904,8 @@ GameObject:
   - component: {fileID: -8480929108079612762}
   - component: {fileID: 5273847054853169012}
   - component: {fileID: 5615321279469974305}
+  - component: {fileID: 4967023393368079357}
+  - component: {fileID: -7692957937891869623}
   m_Layer: 7
   m_Name: Enemy_TurtleShell
   m_TagString: Enemy
@@ -1029,6 +1031,41 @@ MonoBehaviour:
   renderers: []
   flashMaterial: {fileID: 2100000, guid: 75fea2960fe9f5748b26811c937a5a0c, type: 2}
   flashDuration: 0.02
+--- !u!114 &4967023393368079357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6753617674297473082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0deb1baeda401409b94bdf292dd9e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackHitbox
+  damage: 10
+  targetTag: Player
+--- !u!135 &-7692957937891869623
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6753617674297473082}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.76
+  m_Center: {x: 0, y: 0.28, z: 0}
 --- !u!1 &6861681153245785469
 GameObject:
   m_ObjectHideFlags: 0

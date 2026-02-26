@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7857259459952145721}
   - component: {fileID: 5273759481648033710}
-  - component: {fileID: 8642867537942427426}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Untagged
@@ -103,22 +102,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.3588662, y: 0.1749603, z: 0.000000059604645}
     m_Extent: {x: 0.62954795, y: 0.6683546, z: 0.4895594}
   m_DirtyAABB: 0
---- !u!114 &8642867537942427426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19318609298331807}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c66de0702b526924f992dbe650bd8796, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  renderers:
-  - {fileID: 5273759481648033710}
-  flashDuration: 0.08
-  emissionIntensity: 3.5
 --- !u!1 &73034189599502481
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,6 +372,8 @@ GameObject:
   - component: {fileID: 4396035446695811516}
   - component: {fileID: 2503440464522188597}
   - component: {fileID: 6866354354728854932}
+  - component: {fileID: -3769156440567834559}
+  - component: {fileID: -7240852712316078525}
   m_Layer: 7
   m_Name: Enemy_Slime
   m_TagString: Enemy
@@ -514,6 +499,39 @@ MonoBehaviour:
   renderers: []
   flashMaterial: {fileID: 2100000, guid: 75fea2960fe9f5748b26811c937a5a0c, type: 2}
   flashDuration: 0.02
+--- !u!135 &-3769156440567834559
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7153141402127884706}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.56
+  m_Center: {x: 0, y: 0.42, z: 0}
+--- !u!114 &-7240852712316078525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7153141402127884706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0deb1baeda401409b94bdf292dd9e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &7446019047767849115
 GameObject:
   m_ObjectHideFlags: 0
